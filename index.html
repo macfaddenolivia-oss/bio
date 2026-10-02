@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home | Olivia Macfadden</title>
+  <meta name="description" content="Olivia Macfadden is a PhD student in Population Health at Northeastern University, specializing in environmental epidemiology.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===== SHARED HEADER: keep identical on every page (only aria-current changes) =====
+       Home only: no "Olivia Macfadden" brand link (the large name is right below),
+       and the header has the extra class site-header--home to keep the nav in place. -->
+  <header class="site-header site-header--home">
+    <div class="wrap">
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="tools.html">Tools &amp; Projects</a></li>
+          <li><a href="research.html">Research &amp; Experience</a></li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- ===== END SHARED HEADER ===== -->
+
+  <main id="main">
+    <section class="hero" aria-labelledby="name">
+      <div class="wrap">
+        <h1 class="hero__name" id="name">Olivia Macfadden</h1>
+        <p class="hero__title">PhD Student in Population Health, specializing in Environmental Epidemiology</p>
+      </div>
+    </section>
+
+    <!-- Decorative warming stripes (not real temperature data) -->
+    <div class="stripe-band stripe-band--sweep" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <div class="intro">
+        <figure class="portrait">
+          <img src="images/headshot.jpg" alt="Olivia Macfadden" width="720" height="900">
+        </figure>
+
+        <div>
+          <div class="prose">
+            <p>I’m a PhD student in Population Health at Northeastern University, specializing in environmental epidemiology. I work with my advisor, <a href="https://bouve.northeastern.edu/directory/phil-brown/" target="_blank" rel="noopener">Dr. Phil Brown<span class="visually-hidden"> (opens in a new tab)</span></a>, and I’m a member of <a href="https://coe.northeastern.edu/people/varshavsky-julia/" target="_blank" rel="noopener">Dr. Julia Varshavsky<span class="visually-hidden"> (opens in a new tab)</span></a>’s <a href="https://cssh.northeastern.edu/ssehri/varshavsky-lab/" target="_blank" rel="noopener">Epidemiology and Toxicology Lab<span class="visually-hidden"> (opens in a new tab)</span></a>. My research looks at how environmental exposures and a changing climate shape health, and who bears the greatest burden. I also like building tools that make research easier to use. One example is a searchable <a href="https://tinyurl.com/policymenulinkfromoliviassite" target="_blank" rel="noopener">policy engagement database<span class="visually-hidden"> (opens in a new tab)</span></a> for environmental epidemiologists.</p>
+
+            <!-- PLACEHOLDER: Current research — add a one-sentence "Current research" line here, e.g.
+                 <p><strong>Current research:</strong> …</p> -->
+          </div>
+
+          <dl class="meta-list">
+            <dt>Research interests</dt>
+            <dd>Environmental exposures, climate and health, health equity</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== SHARED FOOTER: keep identical on every page ===== -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 Olivia Macfadden</p>
+      <p><a href="https://www.linkedin.com/in/olivia-macfadden/" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+    </div>
+  </footer>
+  <!-- ===== END SHARED FOOTER ===== -->
+</body>
+</html>

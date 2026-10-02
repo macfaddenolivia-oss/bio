@@ -1,0 +1,817 @@
+/* ==========================================================================
+   Olivia Macfadden — site stylesheet
+   All colors, fonts, and spacing live in :root below. Change them here once.
+   ========================================================================== */
+
+:root {
+  /* Palette (light) */
+  --color-bg: #FFFFFF;
+  --color-text: #14213D;          /* navy ink */
+  --color-text-muted: #4A5568;    /* secondary text, ~7.5:1 on white */
+  --color-link: #1F6FEB;          /* bright blue, 4.6:1 on white */
+  --color-orange: #F28C28;        /* main highlight: accents/hover only, never text */
+  --color-coral: #D9472B;         /* sparing highlight: accents only, never text */
+  --color-soft: #E6E8EC;          /* dividers, secondary backgrounds */
+  --color-focus: #1F6FEB;
+
+  /* Warming stripes: 20 decorative stripes (not real temperature data) */
+  --s01: #08306B; --s02: #08519C; --s03: #2171B5; --s04: #4292C6; --s05: #2171B5;
+  --s06: #6BAED6; --s07: #9ECAE1; --s08: #C6DBEF; --s09: #9ECAE1; --s10: #F7F7F7;
+  --s11: #FDD0A2; --s12: #FDAE6B; --s13: #FDD0A2; --s14: #FD8D3C; --s15: #F16913;
+  --s16: #FD8D3C; --s17: #D94801; --s18: #A50F15; --s19: #CB181D; --s20: #A50F15;
+  --stripes: linear-gradient(90deg,
+    var(--s01) 0 5%,   var(--s02) 5% 10%,  var(--s03) 10% 15%, var(--s04) 15% 20%,
+    var(--s05) 20% 25%, var(--s06) 25% 30%, var(--s07) 30% 35%, var(--s08) 35% 40%,
+    var(--s09) 40% 45%, var(--s10) 45% 50%, var(--s11) 50% 55%, var(--s12) 55% 60%,
+    var(--s13) 60% 65%, var(--s14) 65% 70%, var(--s15) 70% 75%, var(--s16) 75% 80%,
+    var(--s17) 80% 85%, var(--s18) 85% 90%, var(--s19) 90% 95%, var(--s20) 95% 100%);
+
+  /* "My path" timeline stop colors: cool blues (earlier) warming to red (now) */
+  --stop-1: #08306B; --stop-2: #08519C; --stop-3: #2171B5; --stop-4: #4292C6;
+  --stop-5: #FD8D3C; --stop-6: #F16913; --stop-7: #A50F15;
+
+  /* Fonts */
+  --font-display: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-read: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+
+  /* Type scale */
+  --fs-name: clamp(2.25rem, 1.2rem + 5.6vw, 5.25rem);
+  --fs-h1: clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem);
+  --fs-h2: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  --fs-h3: 1.1875rem;
+  --fs-lede: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --fs-body: 1.125rem;
+  --fs-small: 0.9375rem;
+  --tracking-tight: -0.03em;
+  --leading-read: 1.65;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 6rem;
+
+  /* Layout */
+  --page-max: 72rem;
+  --gutter: 16px;
+  --measure: 66ch;                 /* reading line length (< ~75 characters) */
+  --band-height: 76px;             /* homepage stripe band */
+  --strip-height: 5px;             /* thin strip on inner pages */
+  --radius: 2px;
+}
+
+@media (min-width: 48rem) {
+  :root { --gutter: 2rem; }
+}
+
+/* Large screens: use more of the width, with roomier side margins.
+   Long reading text keeps its own max line length (--measure). */
+@media (width >= 87.5rem) {
+  :root {
+    --page-max: 96rem;   /* about 1408px of content + 2 x 64px margins */
+    --gutter: 4rem;
+  }
+}
+
+/* Dark mode: stripes and timeline stay full color */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0E1626;
+    --color-text: #EEF1F5;
+    --color-text-muted: #B4BDCB;
+    --color-link: #6EA8FE;
+    --color-soft: #25304A;
+    --color-focus: #6EA8FE;
+    /* Same stripe palette, shifted to the lighter end so early stops stay visible on navy-black */
+    --stop-1: #4292C6; --stop-2: #6BAED6; --stop-3: #9ECAE1; --stop-4: #C6DBEF;
+    --stop-5: #FDAE6B; --stop-6: #F16913; --stop-7: #CB181D;
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+  margin: 0;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color 0.15s, text-decoration-thickness 0.15s;
+}
+a:hover {
+  text-decoration-color: var(--color-orange);
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  background: var(--color-bg);
+  color: var(--color-link);
+  padding: var(--space-2) var(--space-3);
+  z-index: 10;
+  font-weight: 500;
+}
+.skip-link:focus { top: var(--space-3); }
+
+.wrap {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Stripes ---------- */
+.stripe-band {
+  height: var(--band-height);
+  background: var(--stripes);
+}
+.stripe-band--sweep {
+  animation: stripe-sweep 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+@keyframes stripe-sweep {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stripe-band--sweep { animation: none; }
+}
+
+/* Thin strip at the top of every inner page */
+.stripe-strip {
+  height: var(--strip-height);
+  background: var(--stripes);
+}
+
+/* ---------- Site header / nav (identical on every page) ---------- */
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  padding-block: var(--space-5);
+}
+
+.site-brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+/* Home has no brand link; keep the nav where it sits on every other page */
+.site-header--home .site-nav { margin-left: auto; }
+
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+}
+
+.site-nav a {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: var(--fs-small);
+  color: var(--color-text);
+  text-decoration: none;
+  padding-block: var(--space-1);
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.15s;
+}
+.site-nav a:hover { border-bottom-color: var(--color-orange); }
+.site-nav a[aria-current="page"] { border-bottom-color: var(--color-coral); }
+
+/* ---------- Section headings ---------- */
+/* Small orange tick above headings: the "heading detail" accent */
+.heading-accent::before {
+  content: "";
+  display: block;
+  width: 2.25rem;
+  height: 4px;
+  background: var(--color-orange);
+  margin-bottom: var(--space-3);
+}
+
+/* ---------- Home ---------- */
+.hero {
+  padding-block: var(--space-7) var(--space-6);
+}
+.hero__name {
+  font-size: var(--fs-name);
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+.hero__title {
+  margin: var(--space-4) 0 0;
+  max-width: 40ch;
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: var(--fs-lede);
+  line-height: 1.35;
+  color: var(--color-text-muted);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-7) var(--space-9);
+}
+@media (min-width: 48rem) {
+  .intro {
+    grid-template-columns: minmax(14rem, 18rem) 1fr;
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+/* Headshot: clean 4:5 crop sitting on a short stripe bar */
+.portrait {
+  margin: 0;
+  max-width: 18rem;
+}
+.portrait img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 30%;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--color-soft);
+}
+.portrait::after {
+  content: "";
+  display: block;
+  height: 8px;
+  background: var(--stripes);
+}
+
+.prose {
+  font-family: var(--font-read);
+  font-size: var(--fs-body);
+  line-height: var(--leading-read);
+  max-width: var(--measure);
+}
+.prose p { margin: 0 0 var(--space-5); }
+.prose p:last-child { margin-bottom: 0; }
+
+.meta-list {
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-soft);
+  max-width: var(--measure);
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-2) var(--space-5);
+  font-size: var(--fs-small);
+}
+.meta-list dt {
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+.meta-list dd { margin: 0; }
+@media (max-width: 30rem) {
+  .meta-list { grid-template-columns: 1fr; gap: 0; }
+  .meta-list dd + dt { margin-top: var(--space-3); }
+}
+
+/* ---------- Footer (identical on every page) ---------- */
+.site-footer {
+  border-top: 1px solid var(--color-soft);
+}
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-6);
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+.site-footer p { margin: 0; }
+
+/* ---------- Inner pages ---------- */
+.page-head {
+  padding-block: var(--space-7) var(--space-5);
+}
+.page-head h1 { font-size: var(--fs-h1); }
+
+.section {
+  padding-block: var(--space-6) var(--space-7);
+}
+.section h2 {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--space-5);
+}
+.section-note {
+  font-family: var(--font-read);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: var(--measure);
+  margin: 0 0 var(--space-5);
+}
+
+main { padding-bottom: var(--space-8); }
+main:has(.intro) { padding-bottom: 0; }
+
+/* ---------- "My path" timeline ----------
+   Mobile/tablet: one vertical route. Desktop: 3 / 3 / 1 — row one runs left to right,
+   turns down on the right, row two runs right to left, then the path turns down on
+   the left and runs across to Boston, centered on its own row.
+   Each stop sets its own color with style="--stop: var(--stop-N)".
+   Route pieces (.route), icons and the starburst are aria-hidden; the <ol> is what
+   screen readers read. */
+.route-map {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0 0 0 4px;
+}
+.stop {
+  --icon: 72px;        /* layout column for the icon */
+  --icon-size: 72px;   /* drawn icon (Boston is a little larger) */
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--icon) 1fr;
+  column-gap: var(--space-5);
+  align-content: start;
+  padding-bottom: var(--space-7);
+}
+.stop:last-child { padding-bottom: 0; }
+
+.stop__icon {
+  grid-row: 1 / span 4;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-left: calc((var(--icon) - var(--icon-size)) / 2);
+  border: 2px solid var(--stop);
+  border-radius: 50%;
+  color: var(--stop);
+  background: var(--color-bg);
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: 1;
+}
+.stop__icon svg { width: 44px; height: 44px; }
+
+/* Destination: Boston */
+.stop--finish { --icon-size: 80px; }
+.stop--finish .stop__icon svg { width: 50px; height: 50px; }
+.stop__burst {
+  position: absolute;
+  inset: -11px;
+  width: auto !important;
+  height: auto !important;
+}
+
+.stop__place {
+  grid-column: 2;
+  font-size: var(--fs-h3);
+  margin-top: var(--space-2);
+}
+.stop__when {
+  grid-column: 2;
+  margin: var(--space-1) 0 0;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+.stop__what {
+  grid-column: 2;
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-read);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 40ch;
+}
+.stop__detail {
+  grid-column: 2;
+  margin: var(--space-1) 0 0;
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--color-text-muted);
+  max-width: 40ch;
+}
+
+.route {
+  position: absolute;
+  color: var(--stop);
+  pointer-events: none;
+  /* vertical (mobile) placement: from under this icon to just above the next one */
+  left: calc(var(--icon) / 2 - 12px);
+  width: 24px;
+  top: calc(var(--icon) + 6px);
+  bottom: 8px;
+}
+.route svg { position: absolute; overflow: visible; }
+.route-v, .route-turn, .route-h { inset: 0; width: 100%; height: 100%; }
+.route-h, .route-turn, .route-run { display: none; }
+.route-head {
+  width: 16px;
+  height: 16px;
+  left: 50%;
+  bottom: -6px;
+  transform: translateX(-50%);
+}
+/* mobile: stop the arrow a little higher so it clears Boston's starburst */
+.stop--to-finish .route { bottom: 16px; }
+
+@media (min-width: 62rem) {
+  .route-map {
+    --row-gap: 4.5rem;
+    --col-gap: 2rem;
+    --colw: calc((100cqw - 2 * var(--col-gap)) / 3);   /* one column's width */
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: var(--col-gap);
+    row-gap: var(--row-gap);
+    padding-left: 0;
+  }
+  .stop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 var(--space-5);
+  }
+  .stop__icon { margin: 0 0 var(--space-4); }
+  .stop__place { margin-top: 0; }
+  .stop__what, .stop__detail { max-width: 19rem; }
+
+  /* Row two runs right to left; Boston sits alone, centered, on row three */
+  .stop:nth-child(4) { grid-column: 3; grid-row: 2; }
+  .stop:nth-child(5) { grid-column: 2; grid-row: 2; }
+  .stop:nth-child(6) { grid-column: 1; grid-row: 2; }
+  .stop:nth-child(7) { grid-column: 2; grid-row: 3; }
+
+  .stop--finish { --icon: 92px; --icon-size: 92px; }
+  .stop--finish .stop__icon svg { width: 56px; height: 56px; }
+  .stop__burst { inset: -20px; }
+  .stop--finish .stop__icon { margin-bottom: var(--space-6); }
+
+  .route-v { display: none; }
+
+  /* Horizontal hops: from this icon's edge to the next icon's edge */
+  .stop--east .route,
+  .stop--west .route {
+    width: auto;
+    top: calc(var(--icon) / 2 - 14px);
+    bottom: auto;
+    height: 28px;
+    left: calc(50% + var(--icon) / 2 + 8px);
+    right: calc(var(--icon) / 2 + 8px - 50% - var(--col-gap));
+  }
+  .stop--west .route {
+    left: calc(var(--icon) / 2 + 8px - 50% - var(--col-gap));
+    right: calc(50% + var(--icon) / 2 + 8px);
+    transform: scaleX(-1);
+  }
+  .stop--east .route-h,
+  .stop--west .route-h { display: block; }
+  .stop--east .route-head,
+  .stop--west .route-head {
+    left: auto;
+    right: -4px;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+  }
+
+  /* Turn down on the right (end of row one) into the first stop of row two */
+  .stop--south .route {
+    width: auto;
+    left: calc(50% + var(--icon) / 2 + 4px);
+    right: -1.75rem;
+    top: calc(var(--icon) / 2);
+    bottom: calc(-1 * var(--row-gap) - 36px);
+  }
+  .stop--south .route-turn { display: block; }
+  .stop--south .route-head {
+    left: 2px;
+    bottom: -8px;
+    transform: rotate(90deg);
+  }
+
+  /* Turn down on the left (end of row two), then run across to Boston */
+  .stop--to-finish .route {
+    --run: calc(var(--colw) + var(--col-gap) - 34px);   /* to just before Boston's starburst */
+    width: calc(1.75rem + var(--colw) / 2 - var(--icon) / 2 - 4px);
+    left: -1.75rem;
+    top: calc(var(--icon) / 2);
+    bottom: calc(-1 * var(--row-gap) - 46px);           /* Boston's icon center */
+  }
+  .stop--to-finish .route-turn {
+    display: block;
+    transform: scaleX(-1);
+  }
+  .stop--to-finish .route-run {
+    display: block;
+    left: 100%;
+    bottom: -14px;
+    height: 28px;
+    width: var(--run);
+  }
+  .stop--to-finish .route-head {
+    left: calc(100% + var(--run) - 11px);
+    bottom: -8px;
+    transform: rotate(-90deg);
+  }
+}
+
+/* About page only: about half the usual gap between the page title and the content */
+.page-head--about { padding-bottom: 0; }
+.page-head--about + .about-split > .section:first-child { padding-top: 1.75rem; }
+/* Side by side (>= 1400px): start "My path" (its orange mark) level with the top of the
+   bio's first line of letters. 7px = the line spacing above the first line of 18px serif bio text. */
+@media (width >= 87.5rem) {
+  .page-head--about + .about-split > .section:nth-child(2) { padding-top: calc(1.75rem + 7px); }
+}
+
+/* ---------- Wide split (About page, >= 1400px) ----------
+   Bio on the left at its readable width; the 3 / 3 / 1 route takes the rest.
+   Narrower screens keep the timeline below the bio.
+   To revert: delete this block and the .about-split wrapper in about.html. */
+@media (width >= 87.5rem) {
+  .about-split {
+    display: grid;
+    grid-template-columns: minmax(0, 36rem) minmax(0, 1fr);   /* 36rem of 18px serif = about 60 characters per line */
+    column-gap: 4rem;
+    align-items: start;   /* both columns start on the same line */
+  }
+
+  .about-split .route-map {
+    --row-gap: 3.25rem;
+    --col-gap: 1.25rem;
+  }
+  .about-split .stop {
+    --icon: 56px;
+    --icon-size: 56px;
+    padding: 0 var(--space-2);
+  }
+  .about-split .stop__icon { margin-bottom: var(--space-3); }
+  .about-split .stop__icon svg { width: 34px; height: 34px; }
+  .about-split .stop__place { font-size: 1rem; }
+  .about-split .stop__when { font-size: 0.8125rem; margin-top: 2px; }
+  .about-split .stop__what {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    margin-top: var(--space-1);
+  }
+  .about-split .stop__detail { font-size: 0.8125rem; line-height: 1.4; }
+
+  /* Boston, scaled to match */
+  .about-split .stop--finish { --icon: 70px; --icon-size: 70px; }
+  .about-split .stop--finish .stop__icon { margin-bottom: var(--space-5); }
+  .about-split .stop--finish .stop__icon svg { width: 42px; height: 42px; }
+  .about-split .stop__burst { inset: -15px; }
+
+  /* Route pieces whose ends depend on the next icon's size */
+  .about-split .stop--south .route {
+    right: -1.5rem;
+    bottom: calc(-1 * var(--row-gap) - 28px);   /* half of the 56px icon below */
+  }
+  .about-split .stop--to-finish .route {
+    --run: calc(var(--colw) + var(--col-gap) - 26px);
+    width: calc(1.5rem + var(--colw) / 2 - var(--icon) / 2 - 4px);
+    left: -1.5rem;
+    bottom: calc(-1 * var(--row-gap) - 35px);   /* half of Boston's 70px icon */
+  }
+}
+
+/* ---------- Compact definition lists (skills, contact) ---------- */
+.facts {
+  margin: 0;
+  max-width: var(--measure);
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-3) var(--space-6);
+}
+.facts dt {
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+.facts dd { margin: 0; }
+@media (max-width: 30rem) {
+  .facts { grid-template-columns: 1fr; gap: 0; }
+  .facts dd + dt { margin-top: var(--space-3); }
+}
+
+/* ---------- Tools & Projects ---------- */
+.tool-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-7);
+}
+.tool {
+  position: relative;
+  border: 1px solid var(--color-soft);
+  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-5);
+}
+@media (min-width: 56rem) {
+  .tool--featured {
+    grid-template-columns: 3fr 2fr;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    align-items: start;
+  }
+}
+/* Stripe line that draws along the top edge on hover/focus */
+.tool::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  top: -1px;
+  height: 4px;
+  background: var(--stripes);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease-out;
+}
+.tool:hover::before,
+.tool:focus-within::before { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .tool::before { transition: none; }
+}
+
+.tool__shot {
+  display: block;
+  border: 1px solid var(--color-soft);
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+.tool__shot img {
+  width: 100%;
+  transition: transform 0.3s ease-out;
+}
+.tool__shot:hover,
+.tool__shot:focus-visible { border-color: var(--color-link); }
+.tool__shot:hover img { transform: scale(1.02); }
+@media (prefers-reduced-motion: reduce) {
+  .tool__shot img { transition: none; }
+  .tool__shot:hover img { transform: none; }
+}
+
+.tool__body h2 {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--space-4);
+}
+.tool__desc {
+  font-family: var(--font-read);
+  font-size: var(--fs-body);
+  line-height: var(--leading-read);
+  margin: 0 0 var(--space-4);
+}
+.tool__credit {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-5);
+}
+.action-link {
+  font-weight: 500;
+  font-size: 1.0625rem;
+  text-decoration-thickness: 2px;
+}
+.tool__feedback {
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-soft);
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Selected projects ---------- */
+.projects {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-6) var(--space-7);
+}
+@media (min-width: 48rem) {
+  .projects { grid-template-columns: 1fr 1fr; }
+}
+.project {
+  border-top: 2px solid var(--color-text);
+  padding-top: var(--space-4);
+}
+.project h3 { font-size: var(--fs-h3); }
+.project__meta {
+  margin: var(--space-2) 0 var(--space-3);
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+.project p:last-child {
+  margin: 0;
+  max-width: var(--measure);
+  font-family: var(--font-read);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ---------- Entry lists (experience, service, education) ---------- */
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.entry {
+  display: grid;
+  gap: var(--space-3) var(--space-6);
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--color-soft);
+}
+@media (min-width: 48rem) {
+  .entry { grid-template-columns: 15rem 1fr; }
+}
+.entry__org,
+.section h2.entry__org {
+  margin: 0;
+  font-size: var(--fs-h3);
+  letter-spacing: -0.015em;
+}
+.entry__place {
+  display: block;
+  margin-top: var(--space-1);
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
+}
+.roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-5);
+}
+.role__title {
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.0625rem;
+}
+.role__date {
+  margin: var(--space-1) 0 0;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+.role__desc {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-read);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: var(--measure);
+}
+.role__desc em { font-style: italic; }
