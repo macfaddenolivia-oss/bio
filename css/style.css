@@ -322,6 +322,10 @@ a:hover {
   margin: 0;
   max-width: 18rem;
 }
+/* phones: smaller, so the bio starts sooner; stays aligned with the text column */
+@media (max-width: 47.99rem) {
+  .portrait { max-width: min(16.25rem, 68vw); }
+}
 .portrait img {
   width: 100%;
   aspect-ratio: 4 / 5;
@@ -451,14 +455,22 @@ main:has(.intro) { padding-bottom: 0; }
 .stop__icon svg { width: 44px; height: 44px; }
 
 /* Destination: Boston */
-.stop--finish { --icon-size: 80px; }
-.stop--finish .stop__icon svg { width: 50px; height: 50px; }
-.stop__burst {
-  position: absolute;
-  inset: -11px;
-  width: auto !important;
-  height: auto !important;
+.stop--finish {
+  --icon-size: 80px;
+  --burst: 112px;   /* starburst box; rays start at 41% of it, ~6px clear of the circle */
 }
+.stop--finish .stop__icon svg { width: 50px; height: 50px; }
+/* Explicit size + centering: an SVG with inset and width:auto keeps its own intrinsic
+   size instead of stretching, which pushed the rays up and to the left. */
+.route-map .stop--finish .stop__icon svg.stop__burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--burst);
+  height: var(--burst);
+  transform: translate(-50%, -50%);
+}
+.stop__burst path { vector-effect: non-scaling-stroke; }
 
 .stop__place {
   grid-column: 2;
@@ -541,9 +553,8 @@ main:has(.intro) { padding-bottom: 0; }
   .stop:nth-child(6) { grid-column: 1; grid-row: 2; }
   .stop:nth-child(7) { grid-column: 2; grid-row: 3; }
 
-  .stop--finish { --icon: 92px; --icon-size: 92px; }
+  .stop--finish { --icon: 92px; --icon-size: 92px; --burst: 128px; }
   .stop--finish .stop__icon svg { width: 56px; height: 56px; }
-  .stop__burst { inset: -20px; }
   .stop--finish .stop__icon { margin-bottom: var(--space-6); }
 
   .route-v { display: none; }
@@ -657,10 +668,9 @@ main:has(.intro) { padding-bottom: 0; }
   .about-split .stop__detail { font-size: 0.8125rem; line-height: 1.4; }
 
   /* Boston, scaled to match */
-  .about-split .stop--finish { --icon: 70px; --icon-size: 70px; }
+  .about-split .stop--finish { --icon: 70px; --icon-size: 70px; --burst: 100px; }
   .about-split .stop--finish .stop__icon { margin-bottom: var(--space-5); }
   .about-split .stop--finish .stop__icon svg { width: 42px; height: 42px; }
-  .about-split .stop__burst { inset: -15px; }
 
   /* Route pieces whose ends depend on the next icon's size */
   .about-split .stop--south .route {
