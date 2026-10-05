@@ -32,9 +32,16 @@
 
   <main id="main">
     <section class="hero" aria-labelledby="name">
-      <div class="wrap">
-        <h1 class="hero__name" id="name">Olivia Macfadden</h1>
-        <p class="hero__title">PhD Student in Population Health, specializing in Environmental Epidemiology</p>
+      <div class="wrap hero__inner">
+        <!-- Small headshot beside the name on phones only; the large .portrait below is used
+             from 48rem up. Only one of the two is ever displayed, so the alt text is heard once. -->
+        <figure class="hero__photo">
+          <img src="images/headshot.jpg" alt="Olivia Macfadden" width="720" height="900">
+        </figure>
+        <div>
+          <h1 class="hero__name" id="name">Olivia Macfadden</h1>
+          <p class="hero__title">PhD Student in Population Health, specializing in Environmental Epidemiology</p>
+        </div>
       </div>
     </section>
 

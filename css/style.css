@@ -322,9 +322,40 @@ a:hover {
   margin: 0;
   max-width: 18rem;
 }
-/* phones: smaller, so the bio starts sooner; stays aligned with the text column */
+/* Small headshot in the hero, phones only (the large .portrait takes over from 48rem) */
+.hero__photo { display: none; }
 @media (max-width: 47.99rem) {
-  .portrait { max-width: min(16.25rem, 68vw); }
+  .hero { padding-block: var(--space-5); }
+  .hero__inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: var(--space-4);
+  }
+  .hero__photo {
+    display: block;
+    margin: 0;
+    width: 88px;
+  }
+  .hero__photo img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 30%;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: var(--color-soft);
+  }
+  .hero__photo::after {
+    content: "";
+    display: block;
+    height: 4px;
+    background: var(--stripes);
+  }
+  .hero__name { font-size: 1.875rem; letter-spacing: -0.03em; line-height: 1.05; }
+  .hero__title { margin-top: var(--space-2); font-size: 1rem; }
+  .stripe-band { --band-height: 36px; }
+  .intro { padding-top: var(--space-6); }
+  .intro .portrait { display: none; }
 }
 .portrait img {
   width: 100%;
@@ -390,10 +421,19 @@ a:hover {
 }
 
 /* ---------- Inner pages ---------- */
+/* Gap between the page title and the first content, the same on every page */
 .page-head {
-  padding-block: var(--space-7) var(--space-5);
+  padding-block: var(--space-7) 0;
 }
 .page-head h1 { font-size: var(--fs-h1); }
+.page-head + .section,
+.page-head + .about-split > .section:first-child { padding-top: 1.25rem; }
+.page-head + .tool-list { margin-top: 1.25rem; }
+@media (min-width: 48rem) {
+  .page-head + .section,
+  .page-head + .about-split > .section:first-child { padding-top: 1.75rem; }
+  .page-head + .tool-list { margin-top: 1.75rem; }
+}
 
 .section {
   padding-block: var(--space-6) var(--space-7);
@@ -505,10 +545,13 @@ main:has(.intro) { padding-bottom: 0; }
   position: absolute;
   color: var(--stop);
   pointer-events: none;
-  /* vertical (mobile) placement: from under this icon to just above the next one */
+  /* vertical (mobile) placement: a straight dashed line on the icon's center line, from
+     8px under this icon to the arrow tip 8px above the next one (Boston's rays sit either
+     side of the line, so it needs no special case). The line is drawn from the tip upward,
+     so the arrowhead always sits on a solid dash. */
   left: calc(var(--icon) / 2 - 12px);
   width: 24px;
-  top: calc(var(--icon) + 6px);
+  top: calc(var(--icon) + 8px);
   bottom: 8px;
 }
 .route svg { position: absolute; overflow: visible; }
@@ -518,11 +561,9 @@ main:has(.intro) { padding-bottom: 0; }
   width: 16px;
   height: 16px;
   left: 50%;
-  bottom: -6px;
+  bottom: -5px;   /* puts the chevron's tip (y = 11 of 16) exactly on the line's end */
   transform: translateX(-50%);
 }
-/* mobile: stop the arrow a little higher so it clears Boston's starburst */
-.stop--to-finish .route { bottom: 16px; }
 
 @media (min-width: 62rem) {
   .route-map {
@@ -626,9 +667,6 @@ main:has(.intro) { padding-bottom: 0; }
   }
 }
 
-/* About page only: about half the usual gap between the page title and the content */
-.page-head--about { padding-bottom: 0; }
-.page-head--about + .about-split > .section:first-child { padding-top: 1.75rem; }
 /* Side by side (>= 1400px): start "My path" (its orange mark) level with the top of the
    bio's first line of letters. 7px = the line spacing above the first line of 18px serif bio text. */
 @media (width >= 87.5rem) {
