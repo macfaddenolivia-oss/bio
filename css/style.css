@@ -335,7 +335,7 @@ a:hover {
   .hero__photo {
     display: block;
     margin: 0;
-    width: 106px;
+    width: 126px;
   }
   .hero__photo img {
     width: 100%;
@@ -351,10 +351,12 @@ a:hover {
     height: 4px;
     background: var(--stripes);
   }
-  .hero__name { font-size: 1.875rem; letter-spacing: -0.03em; line-height: 1.05; }
+  .hero__name { font-size: 1.625rem; letter-spacing: -0.03em; line-height: 1.05; }
   .hero__title { margin-top: var(--space-2); font-size: 1rem; }
   .stripe-band { --band-height: 36px; }
-  .intro { padding-top: var(--space-6); }
+  .intro { padding-top: 1.25rem; }
+  /* no divider on phones; about one line of space before the bio instead */
+  .intro .meta-list { padding-bottom: 0; border-bottom: 0; margin-bottom: 1.75rem; }
   .intro .portrait { display: none; }
 }
 .portrait img {
