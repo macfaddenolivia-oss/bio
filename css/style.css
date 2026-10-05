@@ -381,10 +381,11 @@ a:hover {
 .prose p { margin: 0 0 var(--space-5); }
 .prose p:last-child { margin-bottom: 0; }
 
+/* Sits above the bio, with its divider underneath */
 .meta-list {
-  margin: var(--space-6) 0 0;
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--color-soft);
+  margin: 0 0 var(--space-5);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-soft);
   max-width: var(--measure);
   display: grid;
   grid-template-columns: max-content 1fr;
