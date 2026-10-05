@@ -519,6 +519,7 @@ main:has(.intro) { padding-bottom: 0; }
   grid-column: 2;
   font-size: var(--fs-h3);
   margin-top: var(--space-2);
+  text-wrap: balance;   /* "City, country" headings wrap into even lines */
 }
 .stop__when {
   grid-column: 2;
