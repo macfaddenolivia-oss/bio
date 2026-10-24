@@ -82,7 +82,7 @@
   --font-read: "IBM Plex Serif", Georgia, "Times New Roman", serif;
 
   /* Type scale */
-  --fs-name: clamp(2.25rem, 1.2rem + 5.6vw, 5.25rem);
+  --fs-name: clamp(2.5rem, 5vw + 1rem, 4rem);
   --fs-h1: clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem);
   --fs-h2: clamp(1.5rem, 1.25rem + 1vw, 2rem);
   --fs-h3: 1.1875rem;
