@@ -82,7 +82,7 @@
   --font-read: "IBM Plex Serif", Georgia, "Times New Roman", serif;
 
   /* Type scale */
-  --fs-name: clamp(2.5rem, 5vw + 1rem, 4rem);
+  --fs-name: clamp(2.25rem, 3.5vw + 0.5rem, 3rem);
   --fs-h1: clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem);
   --fs-h2: clamp(1.5rem, 1.25rem + 1vw, 2rem);
   --fs-h3: 1.1875rem;
@@ -299,7 +299,7 @@ a:hover {
   max-width: 40ch;
   font-family: var(--font-ui);
   font-weight: 400;
-  font-size: var(--fs-lede);
+  font-size: clamp(1.125rem, 1rem + 0.25vw, 1.25rem);
   line-height: 1.35;
   color: var(--color-text-muted);
 }
@@ -429,6 +429,7 @@ a:hover {
   padding-block: var(--space-7) 0;
 }
 .page-head h1 { font-size: var(--fs-h1); }
+.page-head--tools h1 { font-size: clamp(2.25rem, 1.75rem + 1.25vw, 2.75rem); }
 .page-head + .section,
 .page-head + .about-split > .section:first-child { padding-top: 1.25rem; }
 .page-head + .tool-list { margin-top: 1.25rem; }
@@ -765,7 +766,7 @@ main:has(.intro) { padding-bottom: 0; }
   margin: 0;
   padding: 0;
   display: grid;
-  gap: var(--space-7);
+  gap: var(--space-5);
 }
 .tool {
   position: relative;
@@ -776,9 +777,9 @@ main:has(.intro) { padding-bottom: 0; }
 }
 @media (min-width: 56rem) {
   .tool--featured {
-    grid-template-columns: 3fr 2fr;
-    gap: var(--space-6);
-    padding: var(--space-6);
+    grid-template-columns: min(38%, 20rem) 1fr;
+    gap: var(--space-5);
+    padding: var(--space-5);
     align-items: start;
   }
 }
@@ -820,8 +821,8 @@ main:has(.intro) { padding-bottom: 0; }
 }
 
 .tool__body h2 {
-  font-size: var(--fs-h2);
-  margin-bottom: var(--space-4);
+  font-size: 1.5rem;
+  margin-bottom: var(--space-3);
 }
 /* Small status label next to a tool title, e.g. "Work in progress" */
 .badge {
@@ -844,12 +845,13 @@ main:has(.intro) { padding-bottom: 0; }
   font-family: var(--font-read);
   font-size: var(--fs-body);
   line-height: var(--leading-read);
+  max-width: var(--measure);
   margin: 0 0 var(--space-4);
 }
 .tool__credit {
   font-size: var(--fs-small);
   color: var(--color-text-muted);
-  margin: 0 0 var(--space-5);
+  margin: 0 0 var(--space-4);
 }
 .action-link {
   font-weight: 500;
@@ -857,7 +859,7 @@ main:has(.intro) { padding-bottom: 0; }
   text-decoration-thickness: 2px;
 }
 .tool__feedback {
-  margin: var(--space-6) 0 0;
+  margin: var(--space-5) 0 0;
   padding-top: var(--space-4);
   border-top: 1px solid var(--color-soft);
   font-size: var(--fs-small);
